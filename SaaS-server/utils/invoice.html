@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+        border: 1px solid #ddd;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .company-info {
+        text-align: left;
+      }
+      .company-info-box {
+        padding: 20px 10px;
+      }
+      .company-info-box p {
+        font-size: 12px;
+        margin: 2px;
+      }
+
+      .invoice-details {
+        text-align: right;
+        margin-left: auto;
+        width: 30%;
+      }
+
+      .invoice-details-box {
+        padding: 20px 0px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .invoice-details-box p {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 12px;
+        margin: 2px;
+      }
+
+      .invoice-details-box strong {
+        width: 100px;
+        text-align: right;
+      }
+
+      .invoice-details-box span {
+        width: 120px;
+        text-align: left;
+        padding-left: 10px;
+      }
+
+      .invoice-box {
+        width: 100%;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 40px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid rgb(23, 22, 22);
+        padding: 10px;
+        text-align: left;
+        font-size: 14px;
+      }
+      .totals {
+        text-align: right;
+        font-weight: bold;
+      }
+      .terms {
+        margin-top: 30px;
+        font-size: 12px;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+      }
+      .signature {
+        margin-top: 30px;
+        text-align: right;
+      }
+      .signature img {
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <!-- Left: Company Info -->
+      <div class="company-info">
+        <img src="{{logo}} " style="width: 120px; height: auto" alt="logo" />
+
+        <div class="company-info-box">
+          <h4 style="margin: 0"><strong>{{organizationName}}</strong></h4>
+          <p>{{officeAddress}}</p>
+          <p>{{officeEmail}}</p>
+          <p>Phone: {{officeNumber}}</p>
+          <p>{{websiteUrl}}</p>
+        </div>
+      </div>
+
+      <!-- Right: Invoice Details -->
+      <div class="invoice-details">
+        <h1>INVOICE</h1>
+        <div class="invoice-details-box">
+          <p><strong>Invoice#: </strong> <span> {{invoiceNumber}}</span></p>
+          <p><strong>Date: </strong> <span> {{invoiceDate}}</span></p>
+          <p><strong>Due Date: </strong> <span> {{dueDate}}</span></p>
+          <p><strong>Client: </strong> <span> {{clientName}}</span></p>
+          <!-- <p><strong>Contact: </strong> <span> John Doe</span></p> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="invoice-box">
+      <table>
+        <thead>
+          <tr>
+            <th>Service Name</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Rate</th>
+            <th>Discount (%)</th>
+            <th>Tax (%)</th>
+            <th>Total ($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{invoiceItems}}
+        </tbody>
+      </table>
+
+      <div style="margin-top: 30px">
+        <p style="margin: 0"><b>INVOICE TOTALS</b></p>
+
+        <div style="border-top: 2px solid black">
+          <table
+            style="
+              width: 50%;
+              margin-left: auto;
+              text-align: left;
+              margin-top: 0;
+            "
+          >
+            <tr>
+              <td style="text-align: right"><strong>Gross Amount:</strong></td>
+              <td style="text-align: right" class="totals">{{subTotal}}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right">
+                <strong>Discounted Amount:</strong>
+              </td>
+              <td style="text-align: right" class="totals">
+                {{totalDiscount}}
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: right"><strong>Tax Amount:</strong></td>
+              <td style="text-align: right" class="totals">{{totalTax}}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right"><strong>Grand Total:</strong></td>
+              <td style="text-align: right" class="totals">{{grandTotal}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="signature">
+        <p><strong> Signature</strong></p>
+        <img
+          src="{{esign}}"
+          style="width: 80px; height: auto"
+          alt="E-Signature"
+        />
+      </div>
+    </div>
+
+    <div class="terms">{{termsAndConditions}}</div>
+  </body>
+</html>
