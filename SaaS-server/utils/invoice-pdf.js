@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
+// import { executablePath } from "puppeteer";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -139,7 +140,15 @@ export const generateInvoicePDF = async (
 ) => {
   try {
     console.log("⏳ Launching Puppeteer...");
-    const browser = await puppeteer.launch({ headless: "new" });
+    // const browser = await puppeteer.launch({ headless: "new" });
+    browser = await puppeteer.launch({
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? "/usr/bin/chromium-browser"
+          : undefined,
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"], // Important for production
+    });
     const page = await browser.newPage();
 
     console.log("✅ Generating Invoice HTML...");
