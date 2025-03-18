@@ -53,9 +53,8 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("db connected"))
   .catch((err) => console.error("db connection failed", err));
-
 //
-
+//
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 console.log(path.join(__dirname, "uploads"));
@@ -109,22 +108,6 @@ app.post(`/api/invoice-pdf/:invoiceId`, async (req, res) => {
       "Content-Disposition": "inline; filename=invoice.pdf",
     });
     res.send(pdfBuffer);
-
-    // Pass both invoice and profile data to PDF generator
-    // await generateInvoicePDF(invoiceData, profileData, invoiceId);
-    // const pdfPath = path.join(
-    //   __dirname,
-    //   `../allinvoices/invoice-${invoiceId}.pdf`
-    // );
-    // if (!fs.existsSync(pdfPath))
-    //   return res.status(500).json({ error: "Failed to generate PDF" });
-
-    // res.sendFile(pdfPath, (err) => {
-    //   if (err) {
-    //     console.error("Error sending file:", err);
-    //     return res.status(500).json({ error: "Failed to open PDF" });
-    //   }
-    // });
   } catch (error) {
     console.error("Error generating PDF:", error);
     res.status(500).json({ error: "Internal server error" });

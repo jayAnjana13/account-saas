@@ -71,7 +71,6 @@ const registerUser = async (req, res) => {
 // Sign-in
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log("login req;", req.body);
 
   try {
     if (!email || !password) {
@@ -99,7 +98,6 @@ const loginUser = async (req, res) => {
     }
 
     const token = generateToken(user);
-    // console.log("generated token", token);
 
     res.status(200).json({
       message: "User signed in successfully!",
@@ -125,8 +123,6 @@ const loginUser = async (req, res) => {
 const addClient = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const caId = req.userId._id; // Extracted from the middleware
-  console.log("req.body", req.body);
-  console.log("cdId", caId);
   try {
     const ca = await User.findById(caId);
     if (!ca || ca.role !== "CA" || !ca.isVerified) {
@@ -171,7 +167,6 @@ const addClient = async (req, res) => {
 // Verification Route
 const verifyUser = async (req, res) => {
   const { token } = req.params;
-  console.log("verify token", token);
   try {
     // Find the user by token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);

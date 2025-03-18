@@ -64,16 +64,11 @@ const Navigation = () => {
             )}
 
             {/* Profile - Visible to both CA and Clients */}
-            <Dropdown>
-              <Dropdown.Toggle variant="transparent" id="profile-dropdown">
+            {userRole === "CA" && (
+              <Nav.Link as={Link} to="/profiles/profile">
                 Profile
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item as={Link} to="/profiles/profile">
-                  Profile
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+              </Nav.Link>
+            )}
 
             {/* Logout */}
             <Nav.Link as={Link} to="/logout">
