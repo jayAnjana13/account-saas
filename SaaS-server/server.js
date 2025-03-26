@@ -23,7 +23,6 @@ const app = express();
 //
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-console.log("__dirname", __dirname);
 // Set up storage for files (e.g., in a folder called "uploads")
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -57,7 +56,6 @@ mongoose
 //
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-console.log(path.join(__dirname, "uploads"));
 
 // api routes
 app.use("/api/user", userRouter);

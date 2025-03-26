@@ -1,6 +1,6 @@
-// import PropTypes from "prop-types";
 import React from "react";
 import Navigation from "../components/navbar/Navbar";
+import { Container } from "react-bootstrap";
 
 const AdminLayout = ({ children }) => {
   let common = (
@@ -14,11 +14,14 @@ const AdminLayout = ({ children }) => {
   return (
     <React.Fragment>
       {common}
-      {mainContainer}
+      <Container
+        className="p-4 my-4 rounded shadow"
+        style={{ backgroundColor: "#e9ecef" }}
+      >
+        {mainContainer}
+      </Container>
     </React.Fragment>
   );
 };
-// AdminLayout.propTypes = {
-//   children: PropTypes.node,
-// };
+
 export default AdminLayout;

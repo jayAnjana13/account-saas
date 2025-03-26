@@ -23,17 +23,14 @@ const InvoiceDashboard = lazy(() => import("./views/billing/Dashboard"));
 const Invoice = lazy(() => import("./views/billing/invoices/ClientInvoices"));
 const Home = lazy(() => import("./views/home/Home"));
 const Profile = lazy(() => import("./views/profile/Profile"));
+const NotVerified = lazy(() => import("./views/auth/notVerified/NotVerified"));
 
 //
 export const renderRoutes = (routes = []) => {
-  // console.log("Rendering routes:", routes); // Debugging
-
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
         {routes.map((route, i) => {
-          // console.log(`Processing route: ${route.path}`);
-
           const Guard = route.guard || Fragment;
           const Layout = route.layout || Fragment;
           const Element = route.element;
@@ -88,6 +85,10 @@ const routes = [
   {
     path: "/auth/verifying/:token",
     element: Verifying,
+  },
+  {
+    path: "/auth/not-verified",
+    element: NotVerified,
   },
 
   {

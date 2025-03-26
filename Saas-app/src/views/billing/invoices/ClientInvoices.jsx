@@ -48,7 +48,6 @@ const ClientInvoices = () => {
             import.meta.env.VITE_API_URL
           }/invoice/client-invoices/${localStorage.getItem("id")}`
         );
-        // console.log('fetch client invoices', response.data);
 
         if (Array.isArray(response.data.invoices)) {
           setInvoices(response.data.invoices);
@@ -88,7 +87,6 @@ const ClientInvoices = () => {
   //handle pay now button
   const handlePayNow = (event, sessionUrl) => {
     event.preventDefault();
-    console.log("sessionurl :", sessionUrl);
     window.location.href = sessionUrl;
   };
 

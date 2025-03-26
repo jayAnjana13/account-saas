@@ -13,9 +13,8 @@ import {
 } from "react-bootstrap";
 // import PropTypes from "prop-types";
 import axios from "axios";
-import { Formik, FieldArray } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
-import qs from "qs";
 import { toast } from "react-toastify";
 import Loading from "../../../components/loader/Loading";
 
@@ -55,15 +54,7 @@ const AddClient = (props) => {
 
     const data = {
       ...values,
-      // contacts: values.contacts.map((contact) => {
-      //   // Assuming contact is an object, we return it as is or process it if necessary
-      //   return { ...contact }; // You can modify this as needed
-      // }),
     };
-    console.log("values", values);
-    // Convert the data to URL-encoded format
-    // const encodedData = qs.stringify(data);
-    // console.log("encoded data", encodedData);
 
     // Send POST request to create a client
     axios
@@ -107,7 +98,6 @@ const AddClient = (props) => {
       >
         <Formik
           initialValues={{
-            // accountantId: localStorage.getItem('id'), // Accountant's ID from session
             clientType: "Individual",
             firstName: "",
             lastName: "",
@@ -124,7 +114,7 @@ const AddClient = (props) => {
             password: "123456",
             contacts: [{ contact: "", type: "", description: "" }],
           }}
-          validationSchema={validationSchema} // Include validation schema
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {({

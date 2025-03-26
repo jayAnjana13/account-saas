@@ -9,9 +9,7 @@ dotenv.config();
 
 // Function to generate a sequential CA Code
 const generateCaCode = async () => {
-  console.log("generate code is called");
   const lastCA = await User.findOne({ role: "CA" }).sort({ caCode: -1 });
-  console.log("lastCa");
   let newCodeNumber = 1;
   if (lastCA && lastCA.caCode) {
     const lastNumber = parseInt(lastCA.caCode.replace("INV", ""), 10);
@@ -23,25 +21,19 @@ const generateCaCode = async () => {
 
 // CA Signup API
 const registerUser = async (req, res) => {
-  console.log("api called");
   const { firstName, lastName, email, password } = req.body;
-  console.log("req.body", req.body);
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "Email already registered." });
     }
-    console.log("not existing user");
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("hashed password", hashedPassword);
     const token = generateToken({ email });
-    console.log("token", token);
 
     // If user is CA, generate a sequential CA Code
     let caCode = null;
 
     caCode = await generateCaCode();
-    console.log("generated code", generateCaCode);
     // Create CA user
     const newUser = new User({
       firstName,
@@ -52,7 +44,6 @@ const registerUser = async (req, res) => {
       caCode,
       isVerified: false,
     });
-    console.log("new user", newUser);
     // Save CA to DB
     await newUser.save();
 
@@ -60,7 +51,7 @@ const registerUser = async (req, res) => {
     await sendResetEmail(email, emailContent);
 
     res.status(200).json({
-      message: "CA registered successfully. Please verify your email.",
+      message: "User registered successfully. Please verify your email.",
     });
   } catch (error) {
     console.log("Error", error);
@@ -170,12 +161,10 @@ const verifyUser = async (req, res) => {
   try {
     // Find the user by token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded, "decoded");
     if (!decoded || !decoded.email) {
       return res.status(400).json({ message: "Invalid or expired token." });
     }
     const user = await User.findOne({ email: decoded.email });
-    console.log("user=", user);
     if (!user) {
       return res.status(400).json({ message: "User not Found." });
     }

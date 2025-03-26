@@ -14,26 +14,22 @@ const VerifyAccount = () => {
     const verifyAccount = async () => {
       try {
         setLoading(true);
-        console.log("entern for verification");
         // Verify the token by sending a GET request to the server
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/user/verify/${token}`
         );
-        console.log("response", response);
         if (response.status === 200) {
           const { token: jwtToken, user, resetToken } = response.data;
-          console.log("response.data is-", response.data);
 
           // Store the token and user ID in localStorage
           localStorage.setItem("token", jwtToken);
           localStorage.setItem("id", user.id);
-          // localStorage.setItem('role', user.role); // Store the role for later use
+          // localStorage.setItem('role', user.role);
 
           setStatus(
             "Your account has been verified successfully! Redirecting..."
           );
-          // const userRole = localStorage.getItem('role'); // Retrieve from localStorage
-          console.log("User role:", user.role);
+          // const userRole = localStorage.getItem('role');
           setTimeout(() => {
             if (user.role === "CA") {
               navigate("/clients/client-list");

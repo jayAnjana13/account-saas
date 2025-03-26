@@ -55,8 +55,8 @@ const Profile = () => {
     termsAndConditions: Yup.array().of(
       Yup.string().required("Terms & Condition cannot be empty")
     ),
-    logo: Yup.mixed().required("Logo is required"),
-    eSign: Yup.mixed().required("E-Sign is required"),
+    logo: Yup.mixed(),
+    eSign: Yup.mixed(),
   });
 
   useEffect(() => {
@@ -70,10 +70,9 @@ const Profile = () => {
 
         if (response.data.success) {
           const profileData = response.data.profile;
-          console.log("profile data==", profileData);
 
           // Convert relative paths to full URLs
-          const baseUrl = import.meta.env.VITE_NEW_SOCKET_URL; // Adjust if needed
+          const baseUrl = import.meta.env.VITE_NEW_SOCKET_URL;
           const logoFullUrl = profileData.logoUrl
             ? `${baseUrl}/${profileData.logoUrl.replace(/\\/g, "/")}`
             : null;
@@ -96,7 +95,6 @@ const Profile = () => {
             logo: logoFullUrl,
             eSign: eSignFullUrl,
           });
-          console.log("Fetched logo URL:", logoFullUrl); // Debugging
 
           setLogoPreview(logoFullUrl);
           setESignPreview(eSignFullUrl);
@@ -143,7 +141,6 @@ const Profile = () => {
     if (values.eSign instanceof File) {
       formData.append("eSign", values.eSign);
     }
-    // console.log([...formData.entries()]);
 
     try {
       const response = await axios.post(
@@ -155,7 +152,6 @@ const Profile = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      console.log("profile data:", response.data.profile);
       setLoading(false);
       if (response.status === 200) {
         toast.success(response.data.message);

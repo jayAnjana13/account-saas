@@ -13,7 +13,6 @@ const JWTLogin = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (values, { setErrors, setSubmitting }) => {
-    console.log("hey");
     try {
       // Sending login credentials via POST request to the backend API
       const response = await axios.post(

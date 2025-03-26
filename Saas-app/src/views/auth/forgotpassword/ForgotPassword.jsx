@@ -2,19 +2,16 @@ import React from "react";
 import { Row, Col, Alert, Button, Card } from "react-bootstrap";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import axios from "axios"; // Import axios for API requests
-import { VALIDATION_MSG } from "../../../config/constant"; // Ensure this is defined in your project
-import { useNavigate, NavLink } from "react-router-dom";
+import axios from "axios";
+import { VALIDATION_MSG } from "../../../config/constant";
+import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loading from "../../../components/loader/Loading";
 
 const ForgotPassword = () => {
   const [loading, setLoading] = React.useState(false);
 
-  //   const navigate = useNavigate();
-
   const handleSubmit = async (values, { setErrors, setSubmitting }) => {
-    console.log("Form values:", values);
     try {
       setLoading(true);
 

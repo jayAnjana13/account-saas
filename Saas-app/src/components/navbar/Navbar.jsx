@@ -17,31 +17,28 @@ const Navigation = () => {
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand as={Link} to="/dashboard">
-          React-Bootstrap
+          Taxify
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/dashboard">
-              Dashboard
+              Home
             </Nav.Link>
 
-            {/* Clients - Only for CAs */}
             {userRole === "CA" && (
-              <Dropdown>
-                <Dropdown.Toggle variant="transparent" id="clients-dropdown">
-                  Clients
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to="/clients/client-list">
-                    Client List
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <Nav.Link as={Link} to="/clients/client-list">
+                Clients
+              </Nav.Link>
+            )}
+            {userRole === "CA" && (
+              <Nav.Link as={Link} to="/billings/invoices">
+                Billing
+              </Nav.Link>
             )}
 
             {/* Billing - Visible to CA  */}
-            {userRole === "CA" && (
+            {/* {userRole === "CA" && (
               <Dropdown>
                 <Dropdown.Toggle variant="transparent" id="billing-dropdown">
                   Billing
@@ -55,7 +52,7 @@ const Navigation = () => {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            )}
+            )} */}
 
             {userRole === "Client" && (
               <Nav.Link as={Link} to="/invoice">
@@ -72,7 +69,7 @@ const Navigation = () => {
 
             {/* Logout */}
             <Nav.Link as={Link} to="/logout">
-              Log Out
+              Logout
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

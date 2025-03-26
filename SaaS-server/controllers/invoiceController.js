@@ -45,7 +45,6 @@ const generateInvoiceNumber = async (req, res) => {
 const createInvoice = async (req, res) => {
   try {
     const { caId } = req.body;
-    console.log("caid ", caId);
 
     const ca = await User.findById(caId);
     if (!ca || ca.role !== "CA") {

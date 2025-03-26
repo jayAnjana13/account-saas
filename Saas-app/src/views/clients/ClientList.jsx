@@ -62,9 +62,6 @@ const ClientList = () => {
             <Tab eventKey="individual" title="Individual">
               <ClientTable sampleData={clientList} />
             </Tab>
-            <Tab eventKey="prospect" title="Prospect">
-              <ClientTable sampleData={clientList} />
-            </Tab>
           </Tabs>
           {/* Modal for Column Management */}
 

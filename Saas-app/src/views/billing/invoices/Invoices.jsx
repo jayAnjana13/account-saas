@@ -203,7 +203,7 @@ const Invoices = () => {
   ]);
 
   return (
-    <>
+    <React.Fragment>
       {loading && <Loading />}
       <Row>
         <Col md={2}>
@@ -533,7 +533,7 @@ const Invoices = () => {
         show={showInvoiceModal}
         onHide={() => setShowInvoiceModal(false)}
       />
-    </>
+    </React.Fragment>
   );
 };
 

@@ -8,7 +8,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const createCheckoutSession = async (req, res) => {
   const { invoiceGrandTotal, invoiceId, invoiceCaId, invoiceClientId } =
     req.body;
-  console.log("req for payment link", req.body);
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -38,7 +37,6 @@ const createCheckoutSession = async (req, res) => {
       amount: invoiceGrandTotal,
       status: "pending",
     });
-    console.log("payment ..", session.url);
     // res.json({ sessionId: session.id });
     res
       .status(200)
@@ -91,7 +89,6 @@ const getPayment = async (req, res) => {
 const paymentStatus = async (req, res) => {
   const { id } = req.params;
   const caId = id;
-  console.log("id for payment status", id);
   try {
     const payments = await Payment.find({ caId });
     if (!payments || payments.length === 0) {
@@ -103,7 +100,6 @@ const paymentStatus = async (req, res) => {
       invoiceId: payment.invoiceId,
       status: payment.status,
     }));
-    console.log("status", statuses);
     res.status(200).json({ success: true, statuses });
   } catch (error) {
     console.log("Error in getting payment status", error);
@@ -113,11 +109,9 @@ const paymentStatus = async (req, res) => {
 
 const deletePaymentReq = async (req, res) => {
   const { invoiceId } = req.params;
-  console.log("delete req", invoiceId);
   try {
     // Find the payment record by invoiceId
     const payment = await Payment.deleteOne({ invoiceId });
-    console.log("payent to be deleted", payment);
     if (!payment) {
       return res
         .status(404)

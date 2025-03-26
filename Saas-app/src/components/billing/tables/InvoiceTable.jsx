@@ -31,7 +31,7 @@ const InvoiceTable = ({
   const [profileData, setProfileData] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 7;
 
   // open pdf
   const openPdfInNewWindow = async (invoiceId) => {

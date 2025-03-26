@@ -19,6 +19,12 @@ export const MENU = {
       url: "/verifying/:token",
     },
     {
+      id: "notVerified",
+      title: "NotVerified",
+      type: "item",
+      url: "/auth/not-verified",
+    },
+    {
       id: "forgotPassword",
       title: "ForgotPassword",
       type: "item",

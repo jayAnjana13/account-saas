@@ -1,8 +1,10 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import Navbar from "../src/components/navbar/Navbar";
 import routes, { renderRoutes } from "./routes";
+import "react-toastify/dist/ReactToastify.css";
+
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   routes.forEach((route) => {
@@ -13,10 +15,6 @@ const App = () => {
 
   return (
     <>
-      {/* <Navbar />
-      <Router>
-        <Suspense fallback={<div>Loading...</div>}>{renderRoutes()}</Suspense>
-      </Router> */}
       <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>
     </>
   );

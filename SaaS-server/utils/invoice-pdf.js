@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 const templatePath = path.join(__dirname, "invoice.html");
 const pdfFolderPath = path.join(__dirname, "../allinvoices");
 
-const encodeImageToBase64 = (imagePath) => {
+const encodeImageToBase64 = (imagePath, defaultText = "LOGO") => {
   const absolutePath = path.join(
     __dirname,
     "..",
@@ -18,7 +18,10 @@ const encodeImageToBase64 = (imagePath) => {
     path.basename(imagePath)
   );
   if (!fs.existsSync(absolutePath)) {
-    throw new Error(`File not found: ${absolutePath}`);
+    console.warn(
+      `⚠️ Warning: File not found: ${absolutePath}, using default text.`
+    );
+    return defaultText; // Return placeholder text instead of throwing an error
   }
   const imageBuffer = fs.readFileSync(absolutePath);
   return `data:image/png;base64,${imageBuffer.toString("base64")}`;
@@ -30,11 +33,11 @@ const generateInvoiceHTML = (invoiceData, profileData) => {
   console.log("profliedata..", profileData);
 
   const logoUrl = encodeImageToBase64(
-    path.join(__dirname, profileData?.logoUrl)
+    path.join(__dirname, profileData?.logoUrl || "Logo", "LOGO")
   );
   // console.log("logo url'", logoUrl);
   const eSignUrl = encodeImageToBase64(
-    path.join(__dirname, profileData?.eSignUrl)
+    path.join(__dirname, profileData?.eSignUrl || "eSign", "eSign")
   );
   // console.log("esign".eSignUrl);
 
@@ -48,22 +51,34 @@ const generateInvoiceHTML = (invoiceData, profileData) => {
   template = template.replace("{{logo}}", logoUrl);
   template = template.replace(
     "{{organizationName}}",
-    profileData.organizationName
+    profileData.organizationName || "Company Name"
   );
 
-  template = template.replace("{{officeNumber}}", profileData.officeNumber);
-  template = template.replace("{{officeEmail}}", profileData.officeEmail);
+  template = template.replace(
+    "{{officeNumber}}",
+    profileData.officeNumber || "N/A"
+  );
+  template = template.replace(
+    "{{officeEmail}}",
+    profileData.officeEmail || "N/A"
+  );
   template = template.replace("{{invoiceNumber}}", invoiceData.invoiceNumber);
   template = template.replace(
     "{{invoiceDate}}",
-    new Date(invoiceData.invoiceDate).toLocaleDateString()
+    new Date(invoiceData.invoiceDate).toLocaleDateString() || "N/A"
   );
   template = template.replace(
     "{{dueDate}}",
-    new Date(invoiceData.dueDate).toLocaleDateString()
+    new Date(invoiceData.dueDate).toLocaleDateString() || "N/A"
   );
-  template = template.replace("{{clientName}}", invoiceData.client);
-  template = template.replace("{{senderName}}", invoiceData.senderName);
+  template = template.replace(
+    "{{clientName}}",
+    invoiceData.client || "Client Name"
+  );
+  template = template.replace(
+    "{{senderName}}",
+    invoiceData.senderName || "Your Name"
+  );
   template = template.replace("{{esign}}", eSignUrl);
 
   const formattedAddress = `
@@ -141,7 +156,7 @@ export const generateInvoicePDF = async (
   try {
     console.log("⏳ Launching Puppeteer...");
     // const browser = await puppeteer.launch({ headless: "new" });
-    browser = await puppeteer.launch({
+    const browser = await puppeteer.launch({
       executablePath:
         process.env.NODE_ENV === "production"
           ? "/usr/bin/chromium-browser"
